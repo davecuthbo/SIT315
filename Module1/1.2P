@@ -1,0 +1,23 @@
+// C++ code
+//
+volatile int sensorValue = 0;
+
+void setup()
+{
+  pinMode(A0, INPUT);
+  Serial.begin(9600);
+  pinMode(9, OUTPUT);
+  attachInterrupt(digitalPinToInterrupt(A0), interrupt_ISR, CHANGE);
+}
+
+void loop()
+{
+}
+
+void interrupt_ISR()
+{
+  sensorValue = analogRead(A0);
+  Serial.print("Sensor: ");
+  Serial.println(sensorValue);
+  analogWrite(9, map(sensorValue, 0, 1023, 0, 255));
+}
